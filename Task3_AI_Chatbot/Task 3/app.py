@@ -1,13 +1,20 @@
 import streamlit as st
 from chatbot_utils import load_faq_data, get_answer
 
-# Page setup
 st.set_page_config(page_title="SkyAssist AI Chat", layout="centered")
 
-# Load the FAQ dataset
+# Load data
 faq_data = load_faq_data("chat_data_clean.csv")
 
-# CSS styling for better UI
+# Debug: Show if data loaded correctly
+if faq_data is None or faq_data.empty:
+    st.error("❌ FAQ data not loaded. Please check 'chat_data_clean.csv'.")
+    st.stop()
+
+# Optional: Preview data while testing
+# st.write(faq_data.head())
+
+# CSS styling
 st.markdown("""
     <style>
         .main {
@@ -45,7 +52,7 @@ st.markdown("""
 st.markdown('<h1 class="sky-title">SkyAssist AI Chat</h1>', unsafe_allow_html=True)
 st.markdown('<div class="sky-subtitle">Your airline support assistant — fast, friendly & 24/7</div>', unsafe_allow_html=True)
 
-# Sample Questions
+# Sample FAQ questions
 sample_questions = [
     "What are the meal options available?",
     "Can I change my seat after booking?",
@@ -54,15 +61,18 @@ sample_questions = [
     "Why is my name merged on the ticket?"
 ]
 
-# Question Input
+# Ask Section
 st.markdown("**✈️ Ask something:**")
 selected = st.selectbox("Choose a sample question or ask your own:", [""] + sample_questions, key="sample_question")
 user_input = st.text_input("Your question:", value=selected if selected else "", key="user_input")
 
-# Ask button and response display
+# Button + Answer
 if st.button("Ask"):
-    if user_input.strip():
+    if user_input:
         response = get_answer(faq_data, user_input)
+
+        # Optional debug print inside app
         st.markdown(f'<div class="response-bubble">🤖 {response}</div>', unsafe_allow_html=True)
+
     else:
         st.warning("Please enter a question.")
