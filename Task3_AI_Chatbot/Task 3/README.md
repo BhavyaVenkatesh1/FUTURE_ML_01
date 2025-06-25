@@ -26,12 +26,8 @@ Built with **Streamlit** and **NLP**, it simulates real-time customer support wi
 ## 📁 Folder Structure
 
 Task3_AI_Chatbot/
-├── chatbot_model/ # Trained models and NLP pipeline
-├── data/ # Intent data or training corpus
-│ └── intents.json
-├── src/
-│ ├── train_chatbot.py # Training script
-│ ├── chatbot_core.py # Chatbot engine
-│ └── app.py # Flask/Streamlit GUI
-├── README.md
+├── chat_data_clean.csv # Cleaned airline FAQ data
+├── chatbot_utils.py # Utility functions (loading data, NLP)
+├── skyassist_chat.py # Main Streamlit app
 ├── requirements.txt
+└── README.md
